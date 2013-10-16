@@ -11,7 +11,7 @@ Cocoaout
 
 ## 环境需求
 
-* XCode 4+
+* Xcode 4+
 * Mac OS X
 * Ruby 2.0 (OS X 10.9 自带)
 * RubyGems
