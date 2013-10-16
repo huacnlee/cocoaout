@@ -28,7 +28,7 @@ module Cocoaout
     method_option :configration_name, aliases: %W(-c), type: :string, default: 'Release',
                   desc: "use which \"Build Configuration\" to building. (Debug, Release or you custom name)"
     method_option :output, aliases: %W(-o), type: :string, 
-                  desc: "DMG file output filename"
+                  desc: "DMG file output filename", required: true
     def deploy
       config_name = options[:configration_name] || "Release"
       self.build(config_name)
@@ -37,7 +37,7 @@ module Cocoaout
     
     desc "package", "Create dmg with builded app"
     method_option :output, aliases: %W(-o), type: :string,
-                  desc: "DMG file output filename"
+                  desc: "DMG file output filename", required: true
     def package
       output = options[:output] || "~/Downloads/#{Cocoaout::config.app_name}.dmg"
       self.create_dmg_with_release(output)
