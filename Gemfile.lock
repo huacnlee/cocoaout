@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    cocoaout (0.1)
+      thor (>= 0.18)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    thor (0.18.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cocoaout!

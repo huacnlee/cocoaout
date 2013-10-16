@@ -1,0 +1,14 @@
+Cocoaout.config do |config|
+  # 设置项目的名称，Scheme 的名字也要相同
+  config.app_name = "<%= @app_name %>"
+  # 项目用于编译的 SDK 
+  config.sdk = "<%= @sdk %>"
+  # DMG 背景图片文件名（放在项目更目录）
+  config.dmg_background_file_name = "<%= @bg_file_name %>"
+  # DMG 窗口尺寸
+  config.dmg_size = { width: 400, height: 100 } 
+  # DMG App 图标的坐标
+  config.dmg_app_pos = { left: 150, top: 157 } 
+  # DMG Application 文件夹快捷方式的坐标
+  config.dmg_applications_pos = { left: 370, top: 157 } 
+end
