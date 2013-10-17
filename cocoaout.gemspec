@@ -1,6 +1,7 @@
+$:.push File.expand_path("../lib", __FILE__)
 Gem::Specification.new do |s|
   s.name = "cocoaout"
-  s.version = "0.0.2"
+  s.version = Cocoaout::VERSION
   s.author = "Jason Lee"
   s.email = "huacnlee@gmail.com"
   s.homepage = "https://github.com/huacnlee/cocoaout"

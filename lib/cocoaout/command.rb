@@ -4,7 +4,15 @@ module Cocoaout
   class Command < Thor
     include Thor::Actions
     
+    package_name "Cocoaout"
+    map "-v" => "version"
+    
     attr_accessor :config
+    
+    desc "version", "Show version of Cocoaout"
+    def version
+      puts "Cocoaout #{Cocoaout::VERSION}"
+    end
     
     desc "init [APP_NAME]", "Init Cocoaout for current path"
     method_option :sdk, aliases: %W(-s), type: :string, default: 'macosx10.9',
