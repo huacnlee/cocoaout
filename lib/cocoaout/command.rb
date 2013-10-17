@@ -24,14 +24,24 @@ module Cocoaout
       end
     end
     
+    desc "build", "Build project"
+    method_option :configration_name, aliases: %W(-c), type: :string, default: 'Release',
+                  desc: "use which \"Build Configuration\" to building. (Debug, Release or you custom name)"
+    def build
+      load_cocoaout_file
+      config_name = options[:configration_name] || "Release"
+      self.build_project(config_name)
+    end
+    
     desc "deploy", "Build and release"
     method_option :configration_name, aliases: %W(-c), type: :string, default: 'Release',
                   desc: "use which \"Build Configuration\" to building. (Debug, Release or you custom name)"
     method_option :output, aliases: %W(-o), type: :string, 
                   desc: "DMG file output filename", required: true
     def deploy
+      load_cocoaout_file
       config_name = options[:configration_name] || "Release"
-      self.build(config_name)
+      self.build_project(config_name)
       self.create_dmg_with_release(options[:output])
     end
     
@@ -39,12 +49,14 @@ module Cocoaout
     method_option :output, aliases: %W(-o), type: :string,
                   desc: "DMG file output filename", required: true
     def package
+      load_cocoaout_file
       output = options[:output] || "~/Downloads/#{Cocoaout::config.app_name}.dmg"
       self.create_dmg_with_release(output)
     end
     
     desc "clean", "Clean old builds"
     def clean
+      load_cocoaout_file
       output = `#{Cocoaout::xcode_build} clean -scheme #{Cocoaout::config.app_name}`
       if not $?.success?
         puts output and exit 0
@@ -54,7 +66,11 @@ module Cocoaout
     end
     
     protected
-    def build(config_name)
+    def load_cocoaout_file
+      load File.expand_path("Cocoaoutfile", Dir.pwd)
+    end
+    
+    def build_project(config_name)
       command = %(#{Cocoaout::xcode_build} build -scheme #{Cocoaout::config.app_name} archive \
       CONFIGURATION_BUILD_DIR='#{Cocoaout::build_dir}' \
       -configuration #{config_name} -sdk #{Cocoaout::config.sdk})
@@ -126,7 +142,7 @@ module Cocoaout
     		set arrangement of viewOptions to not arranged
     		set icon size of viewOptions to 72
     		set background picture of viewOptions to file ".background:#{dmg_background_file_name}"
-    		set position of item "Xiami.app" of container window to {#{dmg_app_pos[:left]}, #{dmg_app_pos[:top]}}
+    		set position of item "#{Cocoaout::config.app_name}.app" of container window to {#{dmg_app_pos[:left]}, #{dmg_app_pos[:top]}}
     		set position of item "Applications" of container window to {#{dmg_applications_pos[:left]}, #{dmg_applications_pos[:top]}}
     		close
     		open

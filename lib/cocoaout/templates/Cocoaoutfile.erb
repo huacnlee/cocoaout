@@ -1,6 +1,7 @@
 Cocoaout.configure do |config|
   # 设置项目的名称，Scheme 的名字也要相同
   config.app_name = "<%= @app_name %>"
+  config.project = "<%= @app_name %>.xcworkspace" # 或者 <%= @app_name %>.xcodeproj
   # 项目用于编译的 SDK 
   config.sdk = "<%= @sdk %>"
   # DMG 背景图片文件名（放在项目更目录）

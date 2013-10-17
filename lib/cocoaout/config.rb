@@ -10,6 +10,7 @@ module Cocoaout
   class Configuration
     attr_accessor :app_name, 
                   :sdk, 
+                  :project,
                   :dmg_background_file_name, 
                   :dmg_size,
                   :dmg_app_pos,
@@ -20,7 +21,11 @@ module Cocoaout
     self.config ||= Configuration.new
     yield(config)
     
-    self.xcode_build = "xcodebuild -workspace #{self.config.app_name}.xcworkspace"
+    if self.config.project.match(/\.xcworkspace/)
+      self.xcode_build = "xcodebuild -workspace #{self.config.project}"
+    else
+      self.xcode_build = "xcodebuild -project #{self.config.project}"
+    end
     self.temp_dir = "/tmp/xcodebuild-make/#{self.config.app_name}"
     self.dist_dir = [self.temp_dir,"dist"].join("/")
     self.build_dir = [Dir.pwd,"build"].join("/")
