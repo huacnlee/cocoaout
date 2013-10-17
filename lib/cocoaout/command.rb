@@ -101,7 +101,7 @@ module Cocoaout
       `mkdir -p #{dist_dir}/`
       `mkdir #{dist_dir}/.background`
       `ln -s /Applications #{dist_dir}/Applications`
-      `cp -r #{src_dir}/#{dmg_background_file_name} #{dist_dir}/.background/`
+      `cp -r #{dmg_background_file_name} #{dist_dir}/.background/`
       `cp -r #{build_dir}/#{app_name}.app #{dist_dir}/`
       print "."
   
@@ -130,6 +130,7 @@ module Cocoaout
       dmg_app_pos = Cocoaout::config.dmg_app_pos
       dmg_applications_pos = Cocoaout::config.dmg_applications_pos
       dmg_background_file_name = Cocoaout::config.dmg_background_file_name
+      dmg_bg_fname = dmg_background_file_name.split("/").last
       script = %(
     tell application "Finder"
     	tell disk "#{disk_name.strip}"
@@ -137,11 +138,11 @@ module Cocoaout
     		set current view of container window to icon view
     		set toolbar visible of container window to false
     		set statusbar visible of container window to false
-    		set the bounds of container window to {#{dmg_size[:width]}, #{dmg_size[:height]}, 220, 200}
+    		set the bounds of container window to {0,0, #{dmg_size[:width]}, #{dmg_size[:height]}}
     		set viewOptions to the icon view options of container window
     		set arrangement of viewOptions to not arranged
     		set icon size of viewOptions to 72
-    		set background picture of viewOptions to file ".background:#{dmg_background_file_name}"
+    		set background picture of viewOptions to file ".background:#{dmg_bg_fname}"
     		set position of item "#{Cocoaout::config.app_name}.app" of container window to {#{dmg_app_pos[:left]}, #{dmg_app_pos[:top]}}
     		set position of item "Applications" of container window to {#{dmg_applications_pos[:left]}, #{dmg_applications_pos[:top]}}
     		close
